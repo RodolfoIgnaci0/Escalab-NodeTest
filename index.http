@@ -1,0 +1,96 @@
+### Save a new user
+POST http://localhost:2000/api/user/signup
+Content-Type: application/json
+
+{
+  "name": "comprandor1",
+  "lastName": "comprador1",
+  "email": "comprador1@gmail.com",
+  "password": "comprador1",
+  "type": "comprador"
+}
+
+
+### Save a new user
+POST http://localhost:2000/api/user/signup
+Content-Type: application/json
+
+{
+  "name": "vendedor",
+  "lastName": "vendedor",
+  "email": "vendedor@gmail.com",
+  "password": "vendedor",
+  "type": "vendedor"
+}
+
+
+### Get all user
+GET http://localhost:2000/api/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZG9yQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidmVuZGVkb3IiLCJpYXQiOjE2NjQwNDU1OTIsImV4cCI6MTY2NDA0NjE5Mn0.ik_LQGSC632JWAsjaKcpqAqZ1OsALpSLbNPOHlyhdpo
+
+
+### Login
+POST http://localhost:2000/api/user/login
+Content-Type: application/json
+
+{
+  "email": "vendedor@gmail.com",
+  "password": "vendedor"
+}
+
+### Login
+POST http://localhost:2000/api/user/login
+Content-Type: application/json
+
+{
+  "email": "comprador@gmail.com",
+  "password": "comprador"
+}
+
+### Refresh user token
+GET http://localhost:2000/api/user/refreshAccessToken/x5kUjzl8T4TtQ1oE84vOB
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNhbGViLnBhcnJhQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNDU2O2FiYzsiLCJpYXQiOjE2NjI1MTM2ODYsImV4cCI6MTY2MjUxNzI4Nn0.gpfhczqHiN94Sis8s1icT-lVJJn2b_1cGjOH72ei1R4
+
+
+### recarga cuenta
+PATCH http://localhost:2000/api/user/Na2HpB_CwHEVMCSyd_ftV/recharge
+Content-Type: application/json
+
+{
+  "balance": 3000
+}
+
+
+
+### Get all articles
+GET http://localhost:2000/api/article
+
+### Get article
+GET http://localhost:2000/api/article/siCvI7
+
+### save an article -- parametro id de usuario
+POST http://localhost:2000/api/article/BQlzUAuyAe_kuX_x1PH8k
+Content-Type: application/json
+
+{
+  "name": "articulo1",
+  "price": 230
+}
+
+### delete article
+DELETE http://localhost:2000/api/article/wo1Lrv
+
+### update article
+PATCH http://localhost:2000/api/article/123456789
+Content-Type: application/json
+
+{
+  "name": "articulonuevo",
+  "price": 2000000
+}
+
+### purchase an article con dinero
+PATCH http://localhost:2000/api/article/siCvI7/user/Na2HpB_CwHEVMCSyd_ftV
+
+### purchase an article sin dinero
+PATCH http://localhost:2000/api/article/siCvI7/user/u4BAPaLgG3jtw79eGj352
