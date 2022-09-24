@@ -90,7 +90,7 @@ Content-Type: application/json
 }
 
 ### purchase an article con dinero
-PATCH http://localhost:2000/api/article/siCvI7/user/Na2HpB_CwHEVMCSyd_ftV
+PATCH http://localhost:2000/api/article/ejtODr/user/Na2HpB_CwHEVMCSyd_ftV
 
 ### purchase an article sin dinero
-PATCH http://localhost:2000/api/article/siCvI7/user/u4BAPaLgG3jtw79eGj352
+PATCH http://localhost:2000/api/article/ejtODr/user/u4BAPaLgG3jtw79eGj352

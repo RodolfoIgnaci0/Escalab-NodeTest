@@ -197,19 +197,14 @@ class UserService {
     const user = await getUserByID(this.#userId)
     const purchaseArticle = await article.getArticle()
 
-    try {
-      if(purchaseArticle[0].userId.type == 'comprador') 
-       throw new httpErrors.Unauthorized('Article already buyed') 
+    if(purchaseArticle[0].userId.type == 'comprador') 
+      throw new httpErrors.Unauthorized('Article already buyed') 
 
-      if(purchaseArticle[0].price > user.balance) 
+    if(purchaseArticle[0].price > user.balance) 
       throw new httpErrors.Unauthorized('You have not enough money to buy') 
 
-      
     return { user, purchaseArticle }
-    
-    } catch (error) {
-      console.log(error)  
-    }  
+
   }
 
   async changeMoney (user, article){
