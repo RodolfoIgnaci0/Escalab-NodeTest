@@ -32,7 +32,7 @@ class UrlService {
     if (!this.#userId)
       throw new httpErrors.BadRequest('Missing required field: userId')
 
-    const userService = new UserService(this.#userId)
+    const userService = new UserService({userId: this.#userId})
     const foundUser = await userService.verifyUserExists()
 
     const newUrl = await saveUrl({

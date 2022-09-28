@@ -1,7 +1,7 @@
 const { nanoid } = require('nanoid')
-
-const UserService = require('./user')
 const { mongo: { queries } } = require('../database')
+const UserService = require('./user')
+
 const { 
   article: { 
     saveArticle, 
@@ -9,7 +9,8 @@ const {
     deleteOneArticle, 
     updateAnArticle,
     updateAnArticleOwner }
-   } = queries
+  } = queries
+  
 
 class ArticleService {
   #id
@@ -37,6 +38,7 @@ class ArticleService {
       throw new Error('Missing required field: userId')
 
     console.log(`article.services: ${this.#userId}`)
+    //const userservice2 = new UserService();
     const userService = new UserService({userId: this.#userId})
     const foundUser = await userService.verifyUserExists()
 

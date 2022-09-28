@@ -2,7 +2,6 @@ const httpErrors = require('http-errors')
 const { nanoid } = require('nanoid')
 
 const RoleService = require('./role')
-const ArticleService = require('./article')
 
 const {
   mongo: { queries }
@@ -96,7 +95,7 @@ class UserService {
     const { salt, result: hash } = hashString(this.#password)
     const role = await new RoleService({ id: this.#role }).getRoleByID()
 
-    await saveUser({
+    const user = await saveUser({
       id: nanoid(),
       name: this.#name,
       lastName: this.#lastName,
@@ -108,7 +107,7 @@ class UserService {
       balance: this.#balance
     })
 
-    return await getAllUsers()
+    return user
   }
 
   async getUserByID() {

@@ -26,7 +26,7 @@ Content-Type: application/json
 
 ### Get all user
 GET http://localhost:2000/api/user
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZG9yQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidmVuZGVkb3IiLCJpYXQiOjE2NjQwNDU1OTIsImV4cCI6MTY2NDA0NjE5Mn0.ik_LQGSC632JWAsjaKcpqAqZ1OsALpSLbNPOHlyhdpo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZG9yQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidmVuZGVkb3IiLCJpYXQiOjE2NjQzMjQwMjEsImV4cCI6MTY2NDMyNDYyMX0.HjXask6ABuDiLCu-xxhT3ozXFj1U3AhwUhigur6Falo
 
 
 ### Login
@@ -60,7 +60,8 @@ Content-Type: application/json
   "balance": 3000
 }
 
-
+63338fd8dba31455c06c1f4c
+qQ-mWv_rWQhEEBHty27FO
 
 ### Get all articles
 GET http://localhost:2000/api/article
@@ -69,13 +70,22 @@ GET http://localhost:2000/api/article
 GET http://localhost:2000/api/article/siCvI7
 
 ### save an article -- parametro id de usuario
-POST http://localhost:2000/api/article/BQlzUAuyAe_kuX_x1PH8k
+POST http://localhost:2000/api/article/qQ-mWv_rWQhEEBHty27FO
 Content-Type: application/json
 
 {
   "name": "articulo1",
   "price": 230
 }
+
+### save an url -- parametro id de usuario
+POST http://localhost:2000/api/url/qQ-mWv_rWQhEEBHty27FO
+Content-Type: application/json
+
+{
+  "link": "www.google.com"
+}
+
 
 ### delete article
 DELETE http://localhost:2000/api/article/wo1Lrv

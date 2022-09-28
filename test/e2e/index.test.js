@@ -2,7 +2,7 @@ const axios = require('axios')
 const { faker } = require('@faker-js/faker')
 const { server } = require('../../src/expressExample/network')
 
-const URL = `http://localhost:${process.env.PORT || 1996}`
+const URL = `http://localhost:${process.env.PORT || 2000}`
 
 beforeAll(async () => {
   await server.start()
@@ -28,23 +28,42 @@ describe('API: GET /', () => {
 describe('E2E test: Use cases from UserService', () => {
   const name = faker.name.firstName()
   const lastName = faker.name.lastName()
-  const newUser = {
+  const newUserBuyer = {
     name,
     lastName,
     email: faker.internet.email(name, lastName).toLowerCase(),
-    password: faker.datatype.string()
+    password: faker.datatype.string(),
+    type:'comprador'
   }
+  const newUserSeller = {
+    name,
+    lastName,
+    email: faker.internet.email(name, lastName).toLowerCase(),
+    password: faker.datatype.string(),
+    type:'vendedor'
+  }
+
   const tokens = {
     accessToken: '',
     refreshToken: ''
   }
 
-  describe('Testing save user', () => {
+  let idBuyer = ''
+  let _idBuyer = ''
+  const newBalance = 5000
+
+  let idSeller = ''
+  let _idSeller = ''
+  
+
+  describe('Testing save buyer user', () => {
     let response = {}
 
-    test('Should return 201 as status code', async () => {
-      response = await axios.post(`${URL}/api/user/signup`, newUser)
+    test('Should return 201 as status code and asign user id', async () => {
+      response = await axios.post(`${URL}/api/user/signup`, newUserBuyer)
       expect(response.status).toBe(201)
+      idBuyer = response.data.message.id
+      _idBuyer = response.data.message._id
     })
   })
 
@@ -55,8 +74,8 @@ describe('E2E test: Use cases from UserService', () => {
       const {
         data: { message }
       } = await axios.post(`${URL}/api/user/login`, {
-        email: newUser.email,
-        password: newUser.password
+        email: newUserBuyer.email,
+        password: newUserBuyer.password
       })
 
       expect(Object.keys(message)).toEqual(keys)
@@ -75,9 +94,66 @@ describe('E2E test: Use cases from UserService', () => {
         }
       })
 
-      expect(allUsers.some(u => u.email === newUser.email)).toBe(true)
+      expect(allUsers.some(u => u.email === newUserBuyer.email)).toBe(true)
+
     })
   })
+
+  describe('Testing get credit', () => {
+    test('Should return user with credit', async () =>{
+      const {
+        data: { message }
+      } = await axios.patch(`${URL}/api/user/${idBuyer}/recharge`,{
+        balance: newBalance
+      })
+
+      expect(message.balance).toBe(newBalance)
+    })
+  })
+
+  describe('Testing save seller user', () => {
+    let response = {}
+
+    test('Should return 201 as status code and asign user id', async () => {
+      response = await axios.post(`${URL}/api/user/signup`, newUserSeller)
+      expect(response.status).toBe(201)
+      idSeller = response.data.message.id
+      _idSeller = response.data.message._id
+    })
+  })
+
+  describe('Testing login a seller user', () => {
+    const keys = ['accessToken', 'refreshToken']
+
+    test('Should return accessToken and refreshToken', async () => {
+      const {
+        data: { message }
+      } = await axios.post(`${URL}/api/user/login`, {
+        email: newUserSeller.email,
+        password: newUserSeller.password
+      })
+
+      expect(Object.keys(message)).toEqual(keys)
+      tokens.accessToken = message.accessToken
+      tokens.refreshToken = message.refreshToken
+    })
+  })
+/*
+  describe('Testing post a new article as seller', () => {
+    test('Should return accessToken and refreshToken', async () => {
+      const {
+        data: { message }
+      } = await axios.post(`${URL}/api/article/${idSeller}`, {
+        name: 'articulo',
+        price: 300
+      })
+
+      expect(Object.keys(message)).toEqual(keys)
+    })
+  })
+*/
+
+
 })
 
 /**
