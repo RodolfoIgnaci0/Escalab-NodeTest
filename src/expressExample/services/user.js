@@ -193,8 +193,14 @@ class UserService {
 
   async checkPurchaserBalanceArticle (article) {
 
+    if (!this.#userId)
+      throw new httpErrors.BadRequest('Missing required field: userId')
+
     const user = await getUserByID(this.#userId)
     const purchaseArticle = await article.getArticle()
+
+    if (!purchaseArticle)
+      throw new Error('Articles not found')
 
     if(purchaseArticle[0].userId.type == 'comprador') 
       throw new httpErrors.Unauthorized('Article already buyed') 
