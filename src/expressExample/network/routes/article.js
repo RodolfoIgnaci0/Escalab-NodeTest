@@ -86,7 +86,7 @@ ArticleRouter.route('/article/:id')
 
       // purchase an article
       ArticleRouter.route('/article/:id/user/:userId')
-      .patch(async (req,res) =>  {
+      .patch(async (req,res, next) =>  {
         try {
           const {
             params: { id, userId}
@@ -103,6 +103,7 @@ ArticleRouter.route('/article/:id')
           response({ error: false, message: { users, article }, res, status: 200})
         } catch(error){
           console.log(error)
+          next(error)
         }
       })
 

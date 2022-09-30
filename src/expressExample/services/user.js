@@ -202,11 +202,11 @@ class UserService {
     if (!purchaseArticle)
       throw new Error('Articles not found')
 
-    if(purchaseArticle[0].userId.type == 'comprador') 
-      throw new httpErrors.Unauthorized('Article already buyed') 
-
     if(purchaseArticle[0].price > user.balance) 
       throw new httpErrors.Unauthorized('You have not enough money to buy') 
+
+    if(purchaseArticle[0].userId.type == 'comprador') 
+      throw new httpErrors.Unauthorized('Article already buyed') 
 
     return { user, purchaseArticle }
 

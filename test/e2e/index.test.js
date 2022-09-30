@@ -141,17 +141,19 @@ describe('E2E test: Use cases from UserService', () => {
       idProduct = response.data.message.id
     })
   })
-/*
+
   describe('Testing buy a product without credit', () => {
+    response: {}
     test('Should throw error with message not enough money', async () => {
-      try {
-        response = await axios.patch(`${URL}/api/article/${idProduct}/user/${idBuyer}`)
-      } catch (error) {
-        expect(error).toBeInstanceOf(httpErrors)      
-      }
+    
+    try {
+      await axios.patch(`${URL}/api/article/${idProduct}/user/${idBuyer}`)
+    } catch (error) {
+        expect(error.response.status).toBe(401)
+    }
     })
   })
-*/
+
   describe('Testing get credit', () => {
     test('Should return user with credit', async () =>{
       const {
@@ -161,6 +163,7 @@ describe('E2E test: Use cases from UserService', () => {
       })
 
       expect(message.balance).toBe(newBalance)
+      
     })
   })
 
@@ -201,7 +204,7 @@ describe('E2E test: Use cases from UserService', () => {
  *  5.1. El saldo del cliente del insuficiente -> Recarga más saldo
  *  5.2. El saldo es suficiente -> Se genera la compra ✅
  * 6. El saldo pasa de la cuenta del cliente a la cuenta del vendedor ✅
- * 7. El artículo pasa de la cuenta del vendedor a la cuenta del cliente
+ * 7. El artículo pasa de la cuenta del vendedor a la cuenta del cliente ✅
  *
  * Nota: las únicas rutas públicas son las rutas de registro
  */
