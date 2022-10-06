@@ -56,7 +56,7 @@ const generateTokens = () => {
 
     const payload = { email, password }
     const accessToken = jwt.sign(payload, process.env.SECRET, {
-      expiresIn: '10min'
+      expiresIn: '20min'
     })
     const refreshToken = jwt.sign(payload, process.env.SECRET, {
       expiresIn: '1h'

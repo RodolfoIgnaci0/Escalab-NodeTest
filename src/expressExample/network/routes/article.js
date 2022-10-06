@@ -5,13 +5,18 @@ const { ArticleService, UserService } = require('../../services')
 const { mongo: { queries } } = require('../../database')
 const { article: { getArticles } } = queries
 
+const { auth, validatorCompiler } = require('./utils')
+
 const ArticleRouter = Router()
 const response = require('./response')
 
 
 // todos los articulos guardados
 ArticleRouter.route('/article')
-    .get(async (req,res) => {
+    .get(
+      auth.verifyUser(),
+      async (req,res) => {
+      
       try {
         const articles = await getArticles()
         response({ error: false, message: articles, res, status: 200 })
@@ -19,12 +24,13 @@ ArticleRouter.route('/article')
         console.error(error)
         response({ message: 'Internal server error', res })
       }
-      
     })
 
 // un articulo especifico
 ArticleRouter.route('/article/:id')
-    .get(async (req,res) => {
+    .get(
+      auth.verifyUser(), 
+      async (req,res) => {
       const { params: { id } } = req
 
       try {  
@@ -37,7 +43,9 @@ ArticleRouter.route('/article/:id')
         response({ message: 'Internal server error', res })
       }
     })
-    .post(async (req, res) => {
+    .post(
+      auth.verifyUser(), 
+      async (req, res) => {
         const { 
           body: { name, price },
           params: { id: userId } 
@@ -57,7 +65,9 @@ ArticleRouter.route('/article/:id')
           console.error(error)
         }
       })
-      .delete(async (req,res) => {
+      .delete(
+        auth.verifyUser(), 
+        async (req,res) => {
         const {params: {id} } = req
 
         try {
@@ -68,7 +78,9 @@ ArticleRouter.route('/article/:id')
           console.log(error)
         }
       })
-      .patch(async (req,res) => {
+      .patch(
+        auth.verifyUser(), 
+        async (req,res) => {
         const {
           body: { name, price },
           params: { id }
@@ -86,7 +98,9 @@ ArticleRouter.route('/article/:id')
 
       // purchase an article
       ArticleRouter.route('/article/:id/user/:userId')
-      .patch(async (req,res, next) =>  {
+      .patch(
+        auth.verifyUser(), 
+        async (req,res, next) =>  {
         try {
           const {
             params: { id, userId}

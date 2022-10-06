@@ -3,10 +3,10 @@ POST http://localhost:2000/api/user/signup
 Content-Type: application/json
 
 {
-  "name": "comprandor1",
-  "lastName": "comprador1",
-  "email": "comprador1@gmail.com",
-  "password": "comprador1",
+  "name": "comprandor3",
+  "lastName": "comprador3",
+  "email": "comprador3@gmail.com",
+  "password": "comprador3",
   "type": "comprador"
 }
 
@@ -43,8 +43,8 @@ POST http://localhost:2000/api/user/login
 Content-Type: application/json
 
 {
-  "email": "comprador@gmail.com",
-  "password": "comprador"
+  "email": "comprador3@gmail.com",
+  "password": "comprador3"
 }
 
 ### Refresh user token
@@ -53,7 +53,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZ
 
 
 ### recarga cuenta
-PATCH http://localhost:2000/api/user/Na2HpB_CwHEVMCSyd_ftV/recharge
+PATCH http://localhost:2000/api/user/PkG-hrAgo_PKCY6Uq9WxX/recharge
 Content-Type: application/json
 
 {
@@ -63,12 +63,14 @@ Content-Type: application/json
 
 ### Get all articles
 GET http://localhost:2000/api/article
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZG9yQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidmVuZGVkb3IiLCJpYXQiOjE2NjQ5MzQwODEsImV4cCI6MTY2NDkzNDY4MX0.Xk6RfpNDeGwLAh-mYl7ed_Up4bNg36W9WQt8GBXs4lk
 
 ### Get article
 GET http://localhost:2000/api/article/siCvI7
 
 ### save an article -- parametro id de usuario
 POST http://localhost:2000/api/article/qQ-mWv_rWQhEEBHty27FO
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZG9yQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidmVuZGVkb3IiLCJpYXQiOjE2NjUwMjI0MzMsImV4cCI6MTY2NTAyMzYzM30.R4Wvla2awzIGjNE83NWZEtDBTNOEqush2O49eaK-dHw
 Content-Type: application/json
 
 {
@@ -99,11 +101,14 @@ Content-Type: application/json
 
 ### purchase an article con dinero
 PATCH http://localhost:2000/api/article/p2A8So/user/tGr-aUAE2VmQj53D_pJYO
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZG9yQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidmVuZGVkb3IiLCJpYXQiOjE2NjQ5MzQwODEsImV4cCI6MTY2NDkzNDY4MX0.Xk6RfpNDeGwLAh-mYl7ed_Up4bNg36W9WQt8GBXs4lk
 
 ### purchase an article sin dinero
 PATCH http://localhost:2000/api/article/p2A8So/user/6peLqp2vd9XwhNcsrmwIB
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZG9yQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidmVuZGVkb3IiLCJpYXQiOjE2NjQ5MzQwODEsImV4cCI6MTY2NDkzNDY4MX0.Xk6RfpNDeGwLAh-mYl7ed_Up4bNg36W9WQt8GBXs4lk
 
 ### find article
 GET http://localhost:2000/api/article/p2A8So
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZlbmRlZG9yQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoidmVuZGVkb3IiLCJpYXQiOjE2NjQ5MzQwODEsImV4cCI6MTY2NDkzNDY4MX0.Xk6RfpNDeGwLAh-mYl7ed_Up4bNg36W9WQt8GBXs4lk
 
 

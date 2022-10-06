@@ -43,7 +43,12 @@ describe('E2E test: Use cases from UserService', () => {
     type:'vendedor'
   }
 
-  const tokens = {
+  const tokensSeller = {
+    accessToken: '',
+    refreshToken: ''
+  }
+
+  const tokensBuyer = {
     accessToken: '',
     refreshToken: ''
   }
@@ -81,8 +86,8 @@ describe('E2E test: Use cases from UserService', () => {
       })
 
       expect(Object.keys(message)).toEqual(keys)
-      tokens.accessToken = message.accessToken
-      tokens.refreshToken = message.refreshToken
+      tokensBuyer.accessToken = message.accessToken
+      tokensBuyer.refreshToken = message.refreshToken
     })
   })
 
@@ -92,7 +97,7 @@ describe('E2E test: Use cases from UserService', () => {
         data: { message: allUsers }
       } = await axios.get(`${URL}/api/user`, {
         headers: {
-          Authorization: `Bearer ${tokens.accessToken}`
+          Authorization: `Bearer ${tokensBuyer.accessToken}`
         }
       })
 
@@ -112,7 +117,7 @@ describe('E2E test: Use cases from UserService', () => {
     })
   })
 
-  describe('Testing login a seller user', () => {
+  describe('Testing login a seller ', () => {
     const keys = ['accessToken', 'refreshToken']
 
     test('Should return accessToken and refreshToken', async () => {
@@ -124,30 +129,45 @@ describe('E2E test: Use cases from UserService', () => {
       })
 
       expect(Object.keys(message)).toEqual(keys)
-      tokens.accessToken = message.accessToken
-      tokens.refreshToken = message.refreshToken
+      tokensSeller.accessToken = message.accessToken
+      tokensSeller.refreshToken = message.refreshToken
     })
   })
 
   describe('Testing post a new article as seller', () => {
     response: {}
+    const article = {
+      name: 'articulo',
+      price: 300
+    }
+    
     test('Should return 201 status code', async () => {
-      response = await axios.post(`${URL}/api/article/${idSeller}`, {
-        name: 'articulo',
-        price: 300
-      })
+     response = await axios.post(`${URL}/api/article/${idSeller}`, {
+      name: 'articulo',
+      price: 300
+    }, {
+        headers: {
+         Authorization: `Bearer ${tokensSeller.accessToken}`
+        }
+       }
+      )
 
       expect(response.status).toBe(201)
       idProduct = response.data.message.id
     })
   })
 
+
   describe('Testing buy a product without credit', () => {
     response: {}
     test('Should throw error with message not enough money', async () => {
     
     try {
-      await axios.patch(`${URL}/api/article/${idProduct}/user/${idBuyer}`)
+      await axios.patch(`${URL}/api/article/${idProduct}/user/${idBuyer}`, {
+          headers: {
+            Authorization: `Bearer ${tokensBuyer.accessToken}`
+          }
+      })
     } catch (error) {
         expect(error.response.status).toBe(401)
     }
@@ -158,9 +178,12 @@ describe('E2E test: Use cases from UserService', () => {
     test('Should return user with credit', async () =>{
       const {
         data: { message }
-      } = await axios.patch(`${URL}/api/user/${idBuyer}/recharge`,{
+      } = await axios.patch(`${URL}/api/user/${idBuyer}/recharge`, {
         balance: newBalance
-      })
+      },{
+        headers: {
+        Authorization: `Bearer ${tokensBuyer.accessToken}`
+      }})
 
       expect(message.balance).toBe(newBalance)
       
@@ -170,7 +193,12 @@ describe('E2E test: Use cases from UserService', () => {
   describe('Testing buy a product with credit', () => {
     response: {}
     test('Should return 200 status code', async () => {
-      response = await axios.patch(`${URL}/api/article/${idProduct}/user/${idBuyer}`)
+      response = await axios.patch(`${URL}/api/article/${idProduct}/user/${idBuyer}`, {}, 
+      {
+        headers: {
+          Authorization: `Bearer ${tokensBuyer.accessToken}`
+        }
+      })
       
       expect(response.status).toBe(200)
     })
@@ -200,7 +228,7 @@ describe('E2E test: Use cases from UserService', () => {
  * 3. Registrar un usuario como vendedor✅
  *  3.1. Login del vendedor✅
  * 4. Registrar un artículo (precio) del vendedor✅
- * 5. El cliente intenta comprar el artículo
+ * 5. El cliente intenta comprar el artículo✅
  *  5.1. El saldo del cliente del insuficiente -> Recarga más saldo
  *  5.2. El saldo es suficiente -> Se genera la compra ✅
  * 6. El saldo pasa de la cuenta del cliente a la cuenta del vendedor ✅

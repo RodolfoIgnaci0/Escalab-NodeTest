@@ -10,7 +10,9 @@ const { UserService } = require('../../services')
 
 const UserRouter = Router()
 
-UserRouter.route('/user').get(auth.verifyUser(), async (req, res, next) => {
+UserRouter.route('/user').get(
+  auth.verifyUser(), 
+  async (req, res, next) => {
   try {
     const userService = new UserService()
 
@@ -180,7 +182,7 @@ UserRouter.route('/user/:id/recharge')
 .patch(
   validatorCompiler(userIDSchema, 'params'),
   validatorCompiler(userRechargeBalance, 'body'),
-  //auth.verifyIsCurrentUser(),
+  auth.verifyIsCurrentUser(),
   async (req, res, next) => {
     const {
       body: { balance},
